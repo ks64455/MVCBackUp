@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.service.BoardCommand;
 import com.service.BoardReplyCommand;
+import com.service.BoardSearchCommand;
 import com.service.BoardUpdateCommand;
 import com.service.BoardListCommand;
 import com.service.BoardPageCommand;
@@ -91,8 +92,6 @@ public class BoardFrontController extends HttpServlet {
 		}
     
 
-		RequestDispatcher dis = request.getRequestDispatcher(nextPage);
-		dis.forward(request, response);
 		//답변글 쓰기
 		if(com.equals("/reply.do")) {
 			command = new BoardReplyCommand();
@@ -100,6 +99,15 @@ public class BoardFrontController extends HttpServlet {
 			nextPage = "list.do";
 		}
 
+		
+		//글 검색 하기
+		if(com.equals("/search.do")) {
+			command=new BoardSearchCommand();
+			command.execute(request, response);
+			nextPage="list.jsp";
+		}
+		RequestDispatcher dis = request.getRequestDispatcher(nextPage);
+		dis.forward(request, response);
 		
 	}
 	
