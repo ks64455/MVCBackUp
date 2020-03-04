@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.service.BoardCommand;
+import com.service.BoardDeleteCommand;
 import com.service.BoardListCommand;
 import com.service.BoardpwdCheckCommand;
 import com.service.BoardpwdCheckFormCommand;
@@ -41,6 +42,14 @@ public class BoardFrontController extends HttpServlet {
 			command.execute(request, response);
 			nextPage = "list.jsp";
 		}
+
+		
+		//글 삭제하기
+		if(com.equals("delelte.do")) {
+			command = new BoardDeleteCommand();
+			command.execute(request, response);
+			nextPage="list.do";
+    }
 		// 비밀번호 입력 화면
 		if(com.equals("/pwdCheckui.do")) {
 			command = new BoardpwdCheckFormCommand();

@@ -61,6 +61,32 @@ public class BoardDAO {
 				}
 			}
 			return list;
+		}
+  
+	public void delete(String _num) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = dataFactory.getConnection();
+			String query = "DELETE FROM board WHERE num =?";
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, Integer.parseInt(_num));
+			int n = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}// end delete()
+
 		}//end select
 	//비밀번호 체크
 	public Map<String,String> pwdCheck(String _num, String _mode, String _passwd){
@@ -102,6 +128,7 @@ public class BoardDAO {
 				}
 			}
 			return map;
+
 	}
 	
 	//글 수정하기
