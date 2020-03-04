@@ -12,6 +12,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 import com.entity.BoardDTO;
+import com.entity.PageTO;
 
 public class BoardDAO {
 	DataSource dataFactory;
@@ -62,9 +63,10 @@ public class BoardDAO {
 					e.printStackTrace();
 				}
 		  }
-   	}
 			return list;
-  }//end list
+   	}
+			
+ 
 	
 	// 답변글의 기존 repStep 1 증가
 		public void makeReply(int _root, int _step) {

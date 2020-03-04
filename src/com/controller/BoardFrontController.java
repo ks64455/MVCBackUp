@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.service.BoardCommand;
 import com.service.BoardReplyCommand;
+import com.service.BoardUpdateCommand;
 import com.service.BoardListCommand;
 import com.service.BoardPageCommand;
 import com.service.BoardDeleteCommand;
@@ -54,11 +55,8 @@ public class BoardFrontController extends HttpServlet {
 		}
 
 		
-
-
-		
 		//글 삭제하기
-		if(com.equals("delelte.do")) {
+		if(com.equals("delete.do")) {
 			command = new BoardDeleteCommand();
 			command.execute(request, response);
 			nextPage="list.do";
