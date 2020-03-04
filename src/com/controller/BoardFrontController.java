@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.service.BoardCommand;
+import com.service.BoardDeleteCommand;
 import com.service.BoardListCommand;
 
 /**
@@ -51,6 +52,13 @@ public class BoardFrontController extends HttpServlet {
 			command = new BoardListCommand();
 			command.execute(request, response);
 			nextPage = "list.jsp";
+		}
+		
+		//글 삭제하기
+		if(com.equals("delelte.do")) {
+			command = new BoardDeleteCommand();
+			command.execute(request, response);
+			nextPage="list.do";
 		}
 		RequestDispatcher dis = request.getRequestDispatcher(nextPage);
 		dis.forward(request, response);
