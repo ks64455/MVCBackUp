@@ -10,10 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.service.BoardCommand;
+import com.service.BoardReplyCommand;
+import com.service.BoardListCommand;
+import com.service.BoardPageCommand;
 import com.service.BoardDeleteCommand;
 import com.service.BoardListCommand;
 import com.service.BoardpwdCheckCommand;
 import com.service.BoardpwdCheckFormCommand;
+
 
 /**
  * Servlet implementation class BoardFrontController
@@ -37,11 +41,20 @@ public class BoardFrontController extends HttpServlet {
 		BoardCommand command = null;
 		String nextPage = null;
 		//목록보기
+		/* if(com.equals("/list.do")) {
+		command = new BoardListCommand();
+		command.execute(request, response);
+		nextPage = "list.jsp";
+		} */
+		// 페이징 처리
 		if(com.equals("/list.do")) {
-			command = new BoardListCommand();
+			command = new BoardPageCommand();
 			command.execute(request, response);
-			nextPage = "list.jsp";
+			nextPage = "listPage.jsp";
 		}
+
+		
+
 
 		
 		//글 삭제하기
@@ -50,33 +63,48 @@ public class BoardFrontController extends HttpServlet {
 			command.execute(request, response);
 			nextPage="list.do";
     }
+    
 		// 비밀번호 입력 화면
 		if(com.equals("/pwdCheckui.do")) {
 			command = new BoardpwdCheckFormCommand();
 			command.execute(request, response);
 			nextPage = "passwdChk.jsp";
 		}
+    
 		// 비밀번호 체크
 		if(com.equals("/pwdCheck.do")) {
 			command = new BoardpwdCheckCommand();
 			command.execute(request, response);
 			nextPage = (String)request.getAttribute("resultUrl");
 		}
+    
 		// 글 수정 화면 보기
 		if(com.equals("/updateui.do")) {
 			command = new BoardRetrieveCommand();
 			command.execute(request, response);
 			nextPage = "update.jsp";
 		}
+    
 		// 글 수정 하기
 		if(com.equals("/update.do")) {
 			command = new BoardUpdateCommand();
 			command.execute(request, response);
 			nextPage = "list.do";
 		}
+    
+
 		RequestDispatcher dis = request.getRequestDispatcher(nextPage);
 		dis.forward(request, response);
+		//답변글 쓰기
+		if(com.equals("/reply.do")) {
+			command = new BoardReplyCommand();
+			command.execute(request, response);
+			nextPage = "list.do";
+		}
+
 		
 	}
+	
+	
 
 }
