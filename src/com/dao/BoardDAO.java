@@ -364,4 +364,49 @@ public class BoardDAO {
 		}
 		return list;
 	}// end search()
+	
+	//답변글 입력 폼 보기
+	public BoardDTO replyui(String _num) {
+		BoardDTO data = new BoardDTO();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con=dataFactory.getConnection();
+			StringBuffer query = new StringBuffer();
+			query.append("SELECT num, author, title, content, ");
+			query.append("writeday, readcnt, repRoot, repindent, ");
+			query.append("repStep FROM board WHERE num=?");
+			pstmt=con.prepareStatement(query.toString());
+			pstmt.setInt(1, Integer.parseInt(_num));
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				data.setNum(rs.getInt("num"));
+				data.setTitle(rs.getString("title"));
+				data.setContent(rs.getString("content"));
+				data.setWriteday(rs.getString("writeday"));
+				data.setReadcnt(rs.getInt("readcnt"));
+				data.setRepRoot(rs.getInt("repRoot"));
+				data.setRepStep(rs.getInt("repStep"));
+				data.setRepIndent(rs.getInt("repIndent"));
+			}//end if
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return data;
+	}//end replyui
 	}//end class

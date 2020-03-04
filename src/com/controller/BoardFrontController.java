@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.service.BoardCommand;
 import com.service.BoardReplyCommand;
+import com.service.BoardReplyUICommand;
 import com.service.BoardSearchCommand;
 import com.service.BoardUpdateCommand;
 import com.service.BoardListCommand;
@@ -106,9 +107,16 @@ public class BoardFrontController extends HttpServlet {
 			command.execute(request, response);
 			nextPage="list.jsp";
 		}
+		if(com.equals("/replyui.do")) {
+			command = new BoardReplyUICommand();
+			command.execute(request, response);
+			nextPage="reply.jsp";
+		}
+		
+
+		
 		RequestDispatcher dis = request.getRequestDispatcher(nextPage);
 		dis.forward(request, response);
-		
 	}
 	
 	
